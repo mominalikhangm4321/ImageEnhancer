@@ -5,4 +5,5 @@ numpy
 opencv-python
 #real-esrgan
 gfpgan
-echo gunicorn >> requirements.txt
+gunicorn
+
