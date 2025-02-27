@@ -3,7 +3,13 @@ flask-cors
 torch
 numpy
 opencv-python
-#real-esrgan
+basicsr
+facexlib
 gfpgan
+lmdb
+pyyaml
+yacs
+tqdm
+ffmpeg-python
 gunicorn
 
