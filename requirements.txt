@@ -1,0 +1,7 @@
+flask
+flask-cors
+torch
+numpy
+opencv-python
+real-esrgan
+gfpgan
