@@ -2,6 +2,11 @@ from flask import Flask, request, send_file
 import os
 from enhancer import enhance_image
 from flask_cors import CORS
+import os
+import sys
+
+# Manually add Real-ESRGAN path
+sys.path.append(os.path.abspath("Real-ESRGAN"))
 
 app = Flask(__name__)
 CORS(app)

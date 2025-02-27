@@ -3,5 +3,5 @@ flask-cors
 torch
 numpy
 opencv-python
-real-esrgan
+#real-esrgan
 gfpgan
