@@ -15,17 +15,17 @@ MODEL_URL = "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/Rea
 
 sys.path.append(REALSRC_PATH)
 
-# If Real-ESRGAN is missing, clone it and install dependencies
+# Clone Real-ESRGAN if missing
 if not os.path.exists(REALSRC_PATH):
     print("Cloning Real-ESRGAN...")
     subprocess.run(["git", "clone", "--depth", "1", "https://github.com/xinntao/Real-ESRGAN.git"], check=True)
 
-# Ensure weights folder exists
+# Ensure weights folder exists inside 'Real-ESRGAN'
 os.makedirs(WEIGHTS_PATH, exist_ok=True)
 
-# Download model weights if missing
+# ✅ Fix: Ensure the model file is downloaded correctly
 if not os.path.exists(MODEL_FILE):
-    print(f"Downloading model weights: {MODEL_URL}")
+    print(f"Downloading model weights to: {MODEL_FILE}")
     urllib.request.urlretrieve(MODEL_URL, MODEL_FILE)
 
 # Install Real-ESRGAN dependencies
