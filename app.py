@@ -8,7 +8,7 @@ import urllib.request
 # ✅ Ensure Real-ESRGAN is Installed & Model is Downloaded
 # ==============================
 
-REALSRC_PATH = os.path.join(os.getcwd(), "Real-ESRGAN")
+REALSRC_PATH = os.path.abspath(os.path.join(os.getcwd(), "Real-ESRGAN"))  # Ensure absolute path
 WEIGHTS_PATH = os.path.join(REALSRC_PATH, "weights")
 MODEL_FILE = os.path.join(WEIGHTS_PATH, "RealESRGAN_x4plus.pth")
 MODEL_URL = "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth"
