@@ -2,19 +2,33 @@ from flask import Flask, request, send_file
 import os
 import sys
 import subprocess
+import urllib.request
 
 # ==============================
-# ✅ Manually Install Real-ESRGAN in Render
+# ✅ Manually Install Real-ESRGAN in Render & Download Model
 # ==============================
 
 REALSRC_PATH = os.path.join(os.getcwd(), "Real-ESRGAN")
+WEIGHTS_PATH = os.path.join(REALSRC_PATH, "weights")
+MODEL_FILE = os.path.join(WEIGHTS_PATH, "RealESRGAN_x4plus.pth")
+MODEL_URL = "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth"
+
 sys.path.append(REALSRC_PATH)
 
-# If Real-ESRGAN is missing, clone it from GitHub and install dependencies
+# If Real-ESRGAN is missing, clone it and install dependencies
 if not os.path.exists(REALSRC_PATH):
     print("Cloning Real-ESRGAN...")
-    subprocess.run(["git", "clone", "https://github.com/xinntao/Real-ESRGAN.git"], check=True)
-    # Install Real-ESRGAN dependencies
+    subprocess.run(["git", "clone", "--depth", "1", "https://github.com/xinntao/Real-ESRGAN.git"], check=True)
+
+# Ensure weights folder exists
+os.makedirs(WEIGHTS_PATH, exist_ok=True)
+
+# Download model weights if missing
+if not os.path.exists(MODEL_FILE):
+    print(f"Downloading model weights: {MODEL_URL}")
+    urllib.request.urlretrieve(MODEL_URL, MODEL_FILE)
+
+# Install Real-ESRGAN dependencies
 print("Installing Real-ESRGAN dependencies...")
 subprocess.run(["pip", "install", "-r", os.path.join(REALSRC_PATH, "requirements.txt")], check=True)
 
@@ -25,20 +39,23 @@ if not os.path.exists(os.path.join(REALSRC_PATH, "realesrgan/version.py")):
         f.write("__version__ = '0.3.0'\n")
 
 # Ensure dependencies are installed
-print("Installing Real-ESRGAN dependencies...")
-subprocess.run(["pip", "install", "-r", "Real-ESRGAN/requirements.txt"], check=True)
-subprocess.run(["pip", "install", "basicsr"], check=True)
-subprocess.run(["pip", "install", "facexlib"], check=True)
-subprocess.run(["pip", "install", "gfpgan"], check=True)
-subprocess.run(["pip", "install", "lmdb"], check=True)
-subprocess.run(["pip", "install", "pyyaml"], check=True)
-subprocess.run(["pip", "install", "yacs"], check=True)
-subprocess.run(["pip", "install", "tqdm"], check=True)
-subprocess.run(["pip", "install", "ffmpeg-python"], check=True)
-subprocess.run(["pip", "install", "--no-cache-dir", "torchvision==0.15.2"], check=True)
-subprocess.run(["pip", "install", "--no-cache-dir", "torch==2.0.1"], check=True)
-subprocess.run(["pip", "install", "--no-cache-dir", "numpy<2"], check=True)
+print("Installing required dependencies...")
+dependencies = [
+    "basicsr",
+    "facexlib",
+    "gfpgan",
+    "lmdb",
+    "pyyaml",
+    "yacs",
+    "tqdm",
+    "ffmpeg-python",
+    "torchvision==0.15.2",
+    "torch==2.0.1",
+    "numpy<2"
+]
 
+for dep in dependencies:
+    subprocess.run(["pip", "install", "--no-cache-dir", dep], check=True)
 
 from realesrgan.utils import RealESRGANer  # Import after ensuring installation
 
