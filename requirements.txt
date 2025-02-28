@@ -12,4 +12,5 @@ yacs
 tqdm
 ffmpeg-python
 gunicorn
+torchvision
 

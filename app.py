@@ -26,6 +26,7 @@ subprocess.run(["pip", "install", "pyyaml"], check=True)
 subprocess.run(["pip", "install", "yacs"], check=True)
 subprocess.run(["pip", "install", "tqdm"], check=True)
 subprocess.run(["pip", "install", "ffmpeg-python"], check=True)
+subprocess.run(["pip", "install", "torchvision"], check=True)
 
 
 from realesrgan.utils import RealESRGANer  # Import after ensuring installation
