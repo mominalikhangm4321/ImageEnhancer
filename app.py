@@ -18,7 +18,15 @@ if not os.path.exists(REALSRC_PATH):
 # Ensure dependencies are installed
 print("Installing Real-ESRGAN dependencies...")
 subprocess.run(["pip", "install", "-r", "Real-ESRGAN/requirements.txt"], check=True)
-subprocess.run(["pip", "install", "basicsr facexlib gfpgan lmdb pyyaml yacs tqdm ffmpeg-python"], check=True)
+subprocess.run(["pip", "install", "basicsr"], check=True)
+subprocess.run(["pip", "install", "facexlib"], check=True)
+subprocess.run(["pip", "install", "gfpgan"], check=True)
+subprocess.run(["pip", "install", "lmdb"], check=True)
+subprocess.run(["pip", "install", "pyyaml"], check=True)
+subprocess.run(["pip", "install", "yacs"], check=True)
+subprocess.run(["pip", "install", "tqdm"], check=True)
+subprocess.run(["pip", "install", "ffmpeg-python"], check=True)
+
 
 from realesrgan.utils import RealESRGANer  # Import after ensuring installation
 
