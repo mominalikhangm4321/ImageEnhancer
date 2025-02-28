@@ -23,8 +23,8 @@ if not os.path.exists(REALSRC_PATH):
 # ✅ Fix: Ensure the weights directory exists
 os.makedirs(WEIGHTS_PATH, exist_ok=True)
 
-# ✅ Fix: Ensure the model file downloads correctly
-if not os.path.exists(MODEL_FILE):
+# ✅ Fix: Force download the model file if it's missing
+if not os.path.exists(MODEL_FILE) or os.path.getsize(MODEL_FILE) == 0:
     print(f"Downloading model weights to: {MODEL_FILE}")
     try:
         urllib.request.urlretrieve(MODEL_URL, MODEL_FILE)
