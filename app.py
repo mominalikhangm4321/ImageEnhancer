@@ -14,6 +14,15 @@ sys.path.append(REALSRC_PATH)
 if not os.path.exists(REALSRC_PATH):
     print("Cloning Real-ESRGAN...")
     subprocess.run(["git", "clone", "https://github.com/xinntao/Real-ESRGAN.git"], check=True)
+    # Install Real-ESRGAN dependencies
+print("Installing Real-ESRGAN dependencies...")
+subprocess.run(["pip", "install", "-r", os.path.join(REALSRC_PATH, "requirements.txt")], check=True)
+
+# Fix missing module error
+if not os.path.exists(os.path.join(REALSRC_PATH, "realesrgan/version.py")):
+    print("Creating missing 'version.py' file for Real-ESRGAN...")
+    with open(os.path.join(REALSRC_PATH, "realesrgan/version.py"), "w") as f:
+        f.write("__version__ = '0.3.0'\n")
 
 # Ensure dependencies are installed
 print("Installing Real-ESRGAN dependencies...")
