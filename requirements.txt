@@ -13,4 +13,5 @@ tqdm
 ffmpeg-python
 gunicorn
 torchvision==0.15.2
+numpy<2
 
