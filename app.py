@@ -5,7 +5,7 @@ import subprocess
 import urllib.request
 
 # ==============================
-# ✅ Manually Install Real-ESRGAN in Render & Download Model
+# ✅ Ensure Real-ESRGAN is Installed & Model is Downloaded
 # ==============================
 
 REALSRC_PATH = os.path.join(os.getcwd(), "Real-ESRGAN")
@@ -37,10 +37,11 @@ if not os.path.exists(MODEL_FILE):
 print("Installing Real-ESRGAN dependencies...")
 subprocess.run(["pip", "install", "-r", os.path.join(REALSRC_PATH, "requirements.txt")], check=True)
 
-# Fix missing module error
-if not os.path.exists(os.path.join(REALSRC_PATH, "realesrgan/version.py")):
+# ✅ Fix: Ensure 'version.py' exists to prevent import errors
+VERSION_FILE = os.path.join(REALSRC_PATH, "realesrgan/version.py")
+if not os.path.exists(VERSION_FILE):
     print("Creating missing 'version.py' file for Real-ESRGAN...")
-    with open(os.path.join(REALSRC_PATH, "realesrgan/version.py"), "w") as f:
+    with open(VERSION_FILE, "w") as f:
         f.write("__version__ = '0.3.0'\n")
 
 # ✅ Fix: Install required dependencies with proper versions
