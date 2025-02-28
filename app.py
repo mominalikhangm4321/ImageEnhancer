@@ -23,7 +23,7 @@ if not os.path.exists(REALSRC_PATH):
 # ✅ Fix: Ensure the weights directory exists
 os.makedirs(WEIGHTS_PATH, exist_ok=True)
 
-# ✅ Fix: Force download the model file if it's missing
+# ✅ Fix: Download model weights if missing
 if not os.path.exists(MODEL_FILE) or os.path.getsize(MODEL_FILE) == 0:
     print(f"Downloading model weights to: {MODEL_FILE}")
     try:
@@ -64,6 +64,11 @@ for dep in dependencies:
     subprocess.run(["pip", "install", "--no-cache-dir", dep], check=True)
 
 from realesrgan.utils import RealESRGANer  # Import after ensuring installation
+
+# ✅ Fix: Check that the model file is accessible before proceeding
+if not os.path.exists(MODEL_FILE):
+    print(f"❌ Model file still not found at: {MODEL_FILE}")
+    sys.exit(1)
 
 # ==============================
 # ✅ Flask App Setup
