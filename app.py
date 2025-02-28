@@ -15,20 +15,25 @@ MODEL_URL = "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/Rea
 
 sys.path.append(REALSRC_PATH)
 
-# Clone Real-ESRGAN if missing
+# ✅ Fix: Ensure 'Real-ESRGAN' directory exists before cloning
 if not os.path.exists(REALSRC_PATH):
     print("Cloning Real-ESRGAN...")
     subprocess.run(["git", "clone", "--depth", "1", "https://github.com/xinntao/Real-ESRGAN.git"], check=True)
 
-# Ensure weights folder exists inside 'Real-ESRGAN'
+# ✅ Fix: Ensure the weights directory exists
 os.makedirs(WEIGHTS_PATH, exist_ok=True)
 
-# ✅ Fix: Ensure the model file is downloaded correctly
+# ✅ Fix: Ensure the model file downloads correctly
 if not os.path.exists(MODEL_FILE):
     print(f"Downloading model weights to: {MODEL_FILE}")
-    urllib.request.urlretrieve(MODEL_URL, MODEL_FILE)
+    try:
+        urllib.request.urlretrieve(MODEL_URL, MODEL_FILE)
+        print("✅ Model downloaded successfully!")
+    except Exception as e:
+        print(f"❌ Failed to download model weights: {e}")
+        sys.exit(1)  # Stop execution if download fails
 
-# Install Real-ESRGAN dependencies
+# ✅ Fix: Ensure dependencies are installed properly
 print("Installing Real-ESRGAN dependencies...")
 subprocess.run(["pip", "install", "-r", os.path.join(REALSRC_PATH, "requirements.txt")], check=True)
 
@@ -38,7 +43,7 @@ if not os.path.exists(os.path.join(REALSRC_PATH, "realesrgan/version.py")):
     with open(os.path.join(REALSRC_PATH, "realesrgan/version.py"), "w") as f:
         f.write("__version__ = '0.3.0'\n")
 
-# Ensure dependencies are installed
+# ✅ Fix: Install required dependencies with proper versions
 print("Installing required dependencies...")
 dependencies = [
     "basicsr",
