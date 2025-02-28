@@ -2,11 +2,9 @@ from flask import Flask, request, send_file
 import os
 import sys
 import subprocess
-from enhancer import enhance_image
-from flask_cors import CORS  # Import Flask-CORS
 
 # ==============================
-# ✅ Manually Add Real-ESRGAN
+# ✅ Manually Install Real-ESRGAN in Render
 # ==============================
 
 REALSRC_PATH = os.path.join(os.getcwd(), "Real-ESRGAN")
@@ -16,14 +14,20 @@ sys.path.append(REALSRC_PATH)
 if not os.path.exists(REALSRC_PATH):
     print("Cloning Real-ESRGAN...")
     subprocess.run(["git", "clone", "https://github.com/xinntao/Real-ESRGAN.git"], check=True)
-    print("Installing Real-ESRGAN dependencies...")
-    subprocess.run(["pip", "install", "-r", "Real-ESRGAN/requirements.txt"], check=True)
 
-from realesrgan.utils import RealESRGANer  # Import after ensuring it's installed
+# Ensure dependencies are installed
+print("Installing Real-ESRGAN dependencies...")
+subprocess.run(["pip", "install", "-r", "Real-ESRGAN/requirements.txt"], check=True)
+subprocess.run(["pip", "install", "basicsr facexlib gfpgan lmdb pyyaml yacs tqdm ffmpeg-python"], check=True)
+
+from realesrgan.utils import RealESRGANer  # Import after ensuring installation
 
 # ==============================
 # ✅ Flask App Setup
 # ==============================
+
+from enhancer import enhance_image
+from flask_cors import CORS  # Import Flask-CORS
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS
