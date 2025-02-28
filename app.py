@@ -8,22 +8,23 @@ import urllib.request
 # ✅ Ensure Real-ESRGAN is Installed & Model is Downloaded
 # ==============================
 
-REALSRC_PATH = os.path.abspath(os.path.join(os.getcwd(), "Real-ESRGAN"))  # Ensure absolute path
+BASE_DIR = os.getcwd()  # Get the current working directory
+REALSRC_PATH = os.path.join(BASE_DIR, "Real-ESRGAN")
 WEIGHTS_PATH = os.path.join(REALSRC_PATH, "weights")
 MODEL_FILE = os.path.join(WEIGHTS_PATH, "RealESRGAN_x4plus.pth")
 MODEL_URL = "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth"
 
-sys.path.append(REALSRC_PATH)
+sys.path.append(REALSRC_PATH)  # Ensure the correct path is added
 
-# ✅ Fix: Ensure 'Real-ESRGAN' directory exists before cloning
+# ✅ Ensure 'Real-ESRGAN' directory exists before cloning
 if not os.path.exists(REALSRC_PATH):
     print("Cloning Real-ESRGAN...")
     subprocess.run(["git", "clone", "--depth", "1", "https://github.com/xinntao/Real-ESRGAN.git"], check=True)
 
-# ✅ Fix: Ensure the weights directory exists
+# ✅ Ensure the weights directory exists
 os.makedirs(WEIGHTS_PATH, exist_ok=True)
 
-# ✅ Fix: Download model weights if missing
+# ✅ Download model weights if missing
 if not os.path.exists(MODEL_FILE) or os.path.getsize(MODEL_FILE) == 0:
     print(f"Downloading model weights to: {MODEL_FILE}")
     try:
@@ -33,18 +34,18 @@ if not os.path.exists(MODEL_FILE) or os.path.getsize(MODEL_FILE) == 0:
         print(f"❌ Failed to download model weights: {e}")
         sys.exit(1)  # Stop execution if download fails
 
-# ✅ Fix: Ensure dependencies are installed properly
+# ✅ Ensure dependencies are installed properly
 print("Installing Real-ESRGAN dependencies...")
 subprocess.run(["pip", "install", "-r", os.path.join(REALSRC_PATH, "requirements.txt")], check=True)
 
-# ✅ Fix: Ensure 'version.py' exists to prevent import errors
+# ✅ Ensure 'version.py' exists to prevent import errors
 VERSION_FILE = os.path.join(REALSRC_PATH, "realesrgan/version.py")
 if not os.path.exists(VERSION_FILE):
     print("Creating missing 'version.py' file for Real-ESRGAN...")
     with open(VERSION_FILE, "w") as f:
         f.write("__version__ = '0.3.0'\n")
 
-# ✅ Fix: Install required dependencies with proper versions
+# ✅ Install required dependencies
 print("Installing required dependencies...")
 dependencies = [
     "basicsr",
@@ -63,12 +64,12 @@ dependencies = [
 for dep in dependencies:
     subprocess.run(["pip", "install", "--no-cache-dir", dep], check=True)
 
-from realesrgan.utils import RealESRGANer  # Import after ensuring installation
-
-# ✅ Fix: Check that the model file is accessible before proceeding
+# ✅ Ensure model file exists before proceeding
 if not os.path.exists(MODEL_FILE):
     print(f"❌ Model file still not found at: {MODEL_FILE}")
     sys.exit(1)
+
+from realesrgan.utils import RealESRGANer  # Import after ensuring installation
 
 # ==============================
 # ✅ Flask App Setup
