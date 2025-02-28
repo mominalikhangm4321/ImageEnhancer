@@ -1,6 +1,6 @@
 flask
 flask-cors
-torch
+torch==2.0.1
 numpy
 opencv-python
 basicsr
@@ -12,5 +12,5 @@ yacs
 tqdm
 ffmpeg-python
 gunicorn
-torchvision
+torchvision==0.15.2
 
