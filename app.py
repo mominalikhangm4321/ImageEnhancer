@@ -36,6 +36,11 @@ if not os.path.exists(MODEL_FILE) or os.path.getsize(MODEL_FILE) == 0:
         print(f"❌ Failed to download model weights: {e}")
         sys.exit(1)  # Stop execution if download fails
 
+# ✅ Final Check: Verify the model file exists before proceeding
+if not os.path.exists(MODEL_FILE):
+    print(f"❌ Model file STILL NOT FOUND at: {MODEL_FILE}")
+    sys.exit(1)
+
 # ✅ Ensure dependencies are installed properly
 print("Installing Real-ESRGAN dependencies...")
 subprocess.run(["pip", "install", "-r", os.path.join(REALSRC_PATH, "requirements.txt")], check=True)
@@ -65,11 +70,6 @@ dependencies = [
 
 for dep in dependencies:
     subprocess.run(["pip", "install", "--no-cache-dir", dep], check=True)
-
-# ✅ Ensure model file exists before proceeding
-if not os.path.exists(MODEL_FILE):
-    print(f"❌ Model file still not found at: {MODEL_FILE}")
-    sys.exit(1)
 
 from realesrgan.utils import RealESRGANer  # Import after ensuring installation
 
