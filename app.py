@@ -3,6 +3,7 @@ import os
 import sys
 import subprocess
 import urllib.request
+import time
 
 # ==============================
 # ✅ Setup Paths & Ensure Directories Exist
@@ -29,6 +30,7 @@ if not os.path.exists(MODEL_FILE) or os.path.getsize(MODEL_FILE) == 0:
     print(f"Downloading model weights to: {MODEL_FILE}")
     try:
         urllib.request.urlretrieve(MODEL_URL, MODEL_FILE)
+        time.sleep(5)  # Wait to ensure file is fully written
         print("✅ Model downloaded successfully!")
     except Exception as e:
         print(f"❌ Failed to download model weights: {e}")
