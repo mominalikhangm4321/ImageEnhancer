@@ -5,7 +5,7 @@ import subprocess
 import urllib.request
 
 # ==============================
-# ✅ Ensure Real-ESRGAN is Installed & Model is Downloaded
+# ✅ Setup Paths & Ensure Directories Exist
 # ==============================
 
 BASE_DIR = os.getcwd()  # Get the current working directory
